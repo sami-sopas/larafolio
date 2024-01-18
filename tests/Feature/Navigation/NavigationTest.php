@@ -3,6 +3,7 @@
 namespace Tests\Feature\Navigation;
 
 use Tests\TestCase;
+use App\Models\User;
 use Livewire\Livewire;
 use App\Models\Navitem;
 use App\Http\Livewire\Navigation\Navigation;
@@ -36,8 +37,21 @@ class NavigationTest extends TestCase
             //Ver que las propiedades de almenos el primer elemento se muestran en la vista del componente
             ->assertSee($items->first()->label)
             ->assertSee($items->first()->link);
+    }
 
+    /**
+     * @test
+     * @return void
+     */
+    public function only_admin_can_see_navigation_actions() : void
+    {
+        $user = User::factory()->create();
 
+        Livewire::actingAs($user)
+            ->test(Navigation::class)
+            ->assertStatus(200) //Se renderiza el componente
+            ->assertSee('Editar') //Ver si se ven esos botones
+            ->assertSee('Nuevo');
     }
 
 }
