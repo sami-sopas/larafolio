@@ -54,4 +54,19 @@ class NavigationTest extends TestCase
             ->assertSee('Nuevo');
     }
 
+    /**
+     * @test
+     * @return void
+     */
+    // public function guests_cannot_see_navigation_actions() : void
+    // {
+    //     Livewire::test(Navigation::class)
+    //         ->assertStatus(200) //Se renderiza el componente
+    //         ->assertDontSee('Editar') //Ver si se ven esos botones
+    //         ->assertDontSee('Nuevo');
+
+    //     //Verificar que el usuario que visita la pagina es un invitado
+    //     $this->assertGuest();
+    // }
+
 }
