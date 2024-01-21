@@ -76,7 +76,7 @@
                 Formulario de agregar...
             <!-- Form de editar -->
             @else
-                Formulario de editar...
+                <x-forms.edit-items :items="$items"/>
             @endif
         </x-modals.slideover>
 
