@@ -106,4 +106,29 @@ class NavigationTest extends TestCase
 
     }
 
+    /**
+     * @test
+     * @return void
+     */
+    public function admin_can_delete_an_item()
+    {
+        //Crear usuario
+        $user = User::factory()->create();
+
+        //Crear item
+        $item = Navitem::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Navigation::class)
+            ->call('deleteItem', $item); //Metodo que ejecutara la accion de eliminar
+
+        //Verificar que ese Item no exista en la BD
+        $this->assertDatabaseMissing('navitems', [
+            'id' => $item->id,
+            'label' => $item->label,
+            'link' => $item->link
+        ]);
+
+    }
+
 }
