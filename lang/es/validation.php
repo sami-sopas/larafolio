@@ -232,5 +232,17 @@ return [
         'user'                     => 'usuario',
         'username'                 => 'usuario',
         'year'                     => 'año',
+        'label'                    => 'etiqueta',
+        'link'                     => 'enlace',
+    ],
+    'custom' => [
+        'items.*.label' => [
+            'required' => 'La etiqueta de éste elemento es obligatoria.',
+            'max' => 'La etiqueta de éste elemento no debe tener más de :max caracteres.',
+        ],
+        'items.*.link' => [
+            'required' => 'El enlace de éste elemento es obligatorio.',
+            'max' => 'El enlace de éste elemento no debe tener más de :max caracteres.',
+        ],
     ],
 ];
