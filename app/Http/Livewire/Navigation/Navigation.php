@@ -48,7 +48,8 @@ class Navigation extends Component
         //Cerrar el slideOver
         $this->reset('openSlideover'); //Es lo mismo que $this->openSlideover = false;
 
-        //Mostrar mensaje de exito
+        //Disparar evento al navegador
+        $this->dispatchBrowserEvent('notify',['message' => __('Menu items updated successfully!')]);
 
 
     }
