@@ -1,6 +1,8 @@
 <div class="w-full sm:max-w-md px-6 py-4">
+    <!-- Este form ejecuta el metodo edit de Navigation.php -->
+    <!-- El .prevent es para que no se recargue la pagina al enviar el form-->
     <form wire:submit.prevent="edit">
-        @forelse($items as $index => $item)
+        @forelse($items as $index => $item) <!-- Con wire key identificamos cada elemento, para que livewire no se vuelva loco -->
             <section class="border rounded p-2 shadow-md mb-6" wire:key="item-{{ $item->id }}">
                 <h3 class="mb-2 text-gray-500 text-center">{{ __('Item') }} #{{ $index+1 }}</h3>
                 <div>

@@ -69,4 +69,41 @@ class NavigationTest extends TestCase
     //     $this->assertGuest();
     // }
 
+    /**
+     * @test
+     * @return void
+     */
+    public function admin_can_edit_items()
+    {
+        //Crear usuario
+        $user = User::factory()->create();
+
+        //Crear items
+        $items = Navitem::factory(2)->create();
+
+        Livewire::actingAs($user)
+            ->test(Navigation::class)
+            //Seteando o agregando un valor a una propiedad especifica del componente
+            ->set('items.0.label', 'My Projects') //Modificando primer elemento de la coleccion
+            ->set('items.0.link', '#my-projects')
+            ->set('items.1.label', 'Contact Me') //Modificando segundo elemento de la coleccion
+            ->set('items.1.link', '#contact-me')
+            ->call('edit'); //Metodo que ejecutara la accion de editar
+
+        //Verificar que los cambios se guardaron en la base de datos
+        $this->assertDatabaseHas('navitems', [
+            'id' => $items->first()->id,
+            'label' => 'My Projects',
+            'link' => '#my-projects'
+        ]);
+
+        //Verificando el segundo registro (items.1)
+        $this->assertDatabaseHas('navitems', [
+            'id' => $items->last()->id,
+            'label' => 'Contact Me',
+            'link' => '#contact-me'
+        ]);
+
+    }
+
 }

@@ -16,6 +16,12 @@ class Navigation extends Component
     //Para controlar si se va a editar o agregar un nuevo item
     public $addNewItem = false;
 
+    //Reglas de validacion, el * es que se aplicara a todo dentro de la coleccion
+    protected $rules = [
+        'items.*.label' => 'required|string|max:20',
+        'items.*.link' => 'required|string|max:40',
+    ];
+
     public function mount()
     {
         $this->items = Navitem::all();
@@ -26,6 +32,25 @@ class Navigation extends Component
     {
         $this->addNewItem = $addNewItem;
         $this->openSlideover = true;
+    }
+
+    public function edit()
+    {
+        //Validar reglas
+        $this->validate();
+
+        //Actualizo cada item al recorrelos
+        foreach($this->items as $item)
+        {
+            $item->save();
+        }
+
+        //Cerrar el slideOver
+        $this->reset('openSlideover'); //Es lo mismo que $this->openSlideover = false;
+
+        //Mostrar mensaje de exito
+
+
     }
 
     public function render()
