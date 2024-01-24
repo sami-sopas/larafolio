@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Navigation;
 
 use App\Models\Navitem;
 use Livewire\Component;
+use App\Http\Livewire\Traits\Notification;
 
 class Navigation extends Component
 {
+    use Notification;
+
     //Links que tendra la navegacion
     public $items;
 
@@ -53,8 +56,9 @@ class Navigation extends Component
         //Cerrar el slideOver
         $this->reset('openSlideover'); //Es lo mismo que $this->openSlideover = false;
 
-        //Disparar evento al navegador
-        $this->dispatchBrowserEvent('notify',['message' => __('Menu item updated successfully!')]);
+        //Disparar evento al navegador mediante un trait nuestro
+        $this->notify(__('Menu item updated successfully!'));
+        //$this->dispatchBrowserEvent('notify',['message' => __('Menu item updated successfully!')]);
 
 
     }
@@ -68,8 +72,8 @@ class Navigation extends Component
         $this->mount();
 
         //Enviar notificacion (disparar evento al navegador)
-        $this->dispatchBrowserEvent('deleteMessage',['message' => __('Menu item has been deleted')]);
-
+        //$this->dispatchBrowserEvent('deleteMessage',['message' => __('Menu item has been deleted')]);
+        $this->notify(__('Menu item has been deleted'),'deleteMessage');
     }
 
     public function render()
