@@ -19,12 +19,13 @@ const GeneralSwal = Swal.mixin({
     }
 });
 
-// const DeleteConfirmSwal = Swal.mixin({
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#3f3f46',
-//     cancelButtonColor: '#ef4444'
-// });
+// Configuracion inicial para eliminar swwetAlert
+const DeleteConfirmSwal = Swal.mixin({
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3f3f46',
+    cancelButtonColor: '#ef4444'
+});
 
 /* Events */
 window.addEventListener('notify', event => {
@@ -34,23 +35,26 @@ window.addEventListener('notify', event => {
     })
 })
 
-// window.addEventListener('deleteit', event => {
-//     DeleteConfirmSwal.fire({
-//         title: event.detail.title,
-//         text: event.detail.text,
-//         confirmButtonText: event.detail.confirmText,
-//         cancelButtonText: event.detail.cancelText
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             Livewire.emit(event.detail.eventName, event.detail.id)
-//         }
-//     });
-// });
+//Este escuchara al evento deleteit, para eliminar item
+window.addEventListener('deleteit', event => {
+    DeleteConfirmSwal.fire({
+        title: event.detail.title,
+        text: event.detail.text,
+        confirmButtonText: event.detail.confirmText,
+        cancelButtonText: event.detail.cancelText
+    }).then((result) => {
+        if (result.isConfirmed) {
+            //Emitir evento a livewire para eliminar, desde js al backend
+            Livewire.emit(event.detail.eventName, event.detail.id)
+        }
+    });
+});
 
-// window.addEventListener('deleteMessage', event => {
-//     Swal.fire({
-//         confirmButtonColor: '#3f3f46',
-//         icon: 'success',
-//         title: event.detail.message,
-//     });
-// });
+//Modal de deletedMessage, al dar click en eliminar, espera al evento deleteMessage
+window.addEventListener('deleteMessage', event => {
+    Swal.fire({
+        confirmButtonColor: '#3f3f46',
+        icon: 'success',
+        title: event.detail.message,
+    });
+});

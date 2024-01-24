@@ -240,5 +240,10 @@
     "Item": "Elemento",
     "Label": "Etiqueta",
     "Link": "Enlace",
-    "There are no items to show!": "No hay elementos para mostrar!"
+    "There are no items to show!": "No hay elementos para mostrar!",
+    "Are you sure?": "¿Estás segur@",
+    "You will not be able to revert this!": "¡No podrás revertir esta accion!",
+    "Yes, delete it!": "¡Sí, borrarlo!",
+    "Delete:" : "Eliminar",
+    "Menu item has been deleted": "El elemento del menu ha sido eliminado"
 }

@@ -16,6 +16,11 @@ class Navigation extends Component
     //Para controlar si se va a editar o agregar un nuevo item
     public $addNewItem = false;
 
+    protected $listeners = [
+        //Nombre del evento que se va a escuchar => 'Nombre del metodo que se va a ejecutar'
+        'deleteItem'
+    ];
+
     //Reglas de validacion, el * es que se aplicara a todo dentro de la coleccion
     protected $rules = [
         'items.*.label' => 'required|string|max:20',
@@ -49,8 +54,21 @@ class Navigation extends Component
         $this->reset('openSlideover'); //Es lo mismo que $this->openSlideover = false;
 
         //Disparar evento al navegador
-        $this->dispatchBrowserEvent('notify',['message' => __('Menu items updated successfully!')]);
+        $this->dispatchBrowserEvent('notify',['message' => __('Menu item updated successfully!')]);
 
+
+    }
+
+    public function deleteItem(Navitem $item)
+    {
+        //Eliminar el item
+        $item->delete();
+
+        //Actualizar items
+        $this->mount();
+
+        //Enviar notificacion (disparar evento al navegador)
+        $this->dispatchBrowserEvent('deleteMessage',['message' => __('Menu item has been deleted')]);
 
     }
 

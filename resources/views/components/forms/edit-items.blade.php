@@ -18,7 +18,8 @@
                     @error("items.$index.link")<div class="mt-1 text-red-600 text-sm">{{ $message }}</div>@enderror
                 </div>
                 <div class="mt-3 w-0">
-                    {{-- <x-actions.delete eventName="deleteItem" :object="$item"/> --}}
+                    <!-- el eventName almacena el nombre del metodo de livewire para ejecutar el sweeetAlert -->
+                    <x-actions.delete eventName="deleteItem" :object="$item"/>
                 </div>
             </section>
         @empty
