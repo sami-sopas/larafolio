@@ -26,8 +26,8 @@ class Navigation extends Component
 
     //Reglas de validacion, el * es que se aplicara a todo dentro de la coleccion
     protected $rules = [
-        'items.*.label' => 'required|string|max:20',
-        'items.*.link' => 'required|string|max:40',
+        'items.*.label' => 'required|max:20',
+        'items.*.link' => 'required|max:40',
     ];
 
     public function mount()

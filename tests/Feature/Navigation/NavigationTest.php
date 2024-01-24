@@ -131,4 +131,92 @@ class NavigationTest extends TestCase
 
     }
 
+    /**
+     * @test
+     * @return void
+     */
+    public function label_of_items_is_required()
+    {
+        //Crear usuario
+        $user = User::factory()->create();
+
+        //Crear item
+        $items = Navitem::factory(2)->create();
+
+        Livewire::actingAs($user)
+            ->test(Navigation::class)
+            ->set('items.0.label', '')
+            ->set('items.1.label', '')
+            ->call('edit')   //Se envia el campo con la regla que se va a validar
+            ->assertHasErrors(['items.0.label' => 'required'])
+            ->assertHasErrors(['items.1.label' => 'required']);
+
+    }
+
+        /**
+     * @test
+     * @return void
+     */
+    public function link_of_items_is_required()
+    {
+        //Crear usuario
+        $user = User::factory()->create();
+
+        //Crear item
+        $items = Navitem::factory(2)->create();
+
+        Livewire::actingAs($user)
+            ->test(Navigation::class)
+            ->set('items.0.link', '')
+            ->set('items.1.link', '')
+            ->call('edit')   //Se envia el campo con la regla que se va a validar
+            ->assertHasErrors(['items.0.link' => 'required'])
+            ->assertHasErrors(['items.1.link' => 'required']);
+
+    }
+
+        /**
+     * @test
+     * @return void
+     */
+    public function label_of_items_must_have_a_maximum_of_twenty_characters()
+    {
+        //Crear usuario
+        $user = User::factory()->create();
+
+        //Crear item
+        $items = Navitem::factory(2)->create();
+
+        Livewire::actingAs($user)
+            ->test(Navigation::class)
+            ->set('items.0.label', '123456789112345678911111')
+            ->set('items.1.label', '12345678998765432198765432')
+            ->call('edit')   //Se envia el campo con la regla que se va a validar
+            ->assertHasErrors(['items.0.label' => 'max'])
+            ->assertHasErrors(['items.1.label' => 'max']);
+
+    }
+
+            /**
+     * @test
+     * @return void
+     */
+    public function link_of_items_must_have_a_maximum_of_twenty_characters()
+    {
+        //Crear usuario
+        $user = User::factory()->create();
+
+        //Crear item
+        $items = Navitem::factory(2)->create();
+
+        Livewire::actingAs($user)
+            ->test(Navigation::class)
+            ->set('items.0.link', '123456789112345678911111123456789112345678911111')
+            ->set('items.1.link', '12345678998765432198765432123456789112345678911111')
+            ->call('edit')   //Se envia el campo con la regla que se va a validar
+            ->assertHasErrors(['items.0.link' => 'max'])
+            ->assertHasErrors(['items.1.link' => 'max']);
+
+    }
+
 }
