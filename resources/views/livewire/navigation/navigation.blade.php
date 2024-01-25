@@ -73,7 +73,7 @@
         <x-modals.slideover>
             <!-- Form de agregar -->
             @if($addNewItem)
-                Formulario de agregar...
+                <livewire:navigation.item />
             <!-- Form de editar -->
             @else
                 <x-forms.edit-items :items="$items"/>
