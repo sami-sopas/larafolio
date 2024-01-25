@@ -245,5 +245,10 @@
     "You will not be able to revert this!": "¡No podrás revertir esta accion!",
     "Yes, delete it!": "¡Sí, borrarlo!",
     "Delete:" : "Eliminar",
-    "Menu item has been deleted": "El elemento del menu ha sido eliminado"
+    "Menu item has been deleted": "El elemento del menu ha sido eliminado",
+    "Item created successfully!": "¡Elemento creado con éxito!",
+    "These are the static links for the 3 sections of portfolio (Home, Projects and Contact):" : "Estos son los enlaces estáticos para las 3 secciones del portafolio (Inicio, Proyectos y Contacto):",
+    "hello": "hola",
+    "projects": "proyectos",
+    "contact": "contacto"
 }

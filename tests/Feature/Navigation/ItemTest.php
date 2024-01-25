@@ -24,4 +24,25 @@ class ItemTest extends TestCase
             ->test(Item::class)
             ->assertStatus(200); //Se renderiza el componente
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function admin_can_add_an_item()
+    {
+        //Crear usuario
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Item::class)
+            ->set('item.label','My label') //Llenando el form
+            ->set('item.link','My link')
+            ->call('save');
+
+        $this->assertDatabaseHas('navitems', [
+            'label' => 'My label',
+            'link' => '#my-link'
+        ]);
+    }
 }

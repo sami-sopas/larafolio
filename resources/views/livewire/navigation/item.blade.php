@@ -1,3 +1,2 @@
-<div>
-    formulario
-</div>
+
+<x-forms.new-item />
