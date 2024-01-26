@@ -29,6 +29,12 @@ class Item extends Component
 
         $this->item->save();
 
+        //Emitir evento al componente padre (navigation) para refrescar y cerrar slideOver
+        $this->emitTo('navigation.navigation','itemAdded');
+
+        //reiniciar estado de la propiedad item (para que no se queden los campos en los inputs)
+        $this->mount();
+
         $this->notify(__('Item created successfully!'));
     }
 

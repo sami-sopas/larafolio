@@ -21,7 +21,8 @@ class Navigation extends Component
 
     protected $listeners = [
         //Nombre del evento que se va a escuchar => 'Nombre del metodo que se va a ejecutar'
-        'deleteItem'
+        'deleteItem',
+        'itemAdded' => 'updateDataAfterAddItem'
     ];
 
     //Reglas de validacion, el * es que se aplicara a todo dentro de la coleccion
@@ -40,6 +41,12 @@ class Navigation extends Component
     {
         $this->addNewItem = $addNewItem;
         $this->openSlideover = true;
+    }
+
+    public function updateDataAfterAddItem()
+    {
+        $this->items = Navitem::all();
+        $this->reset('openSlideover');
     }
 
     public function edit()

@@ -37,7 +37,7 @@ class ItemTest extends TestCase
         Livewire::actingAs($user)
             ->test(Item::class)
             ->set('item.label','My label') //Llenando el form
-            ->set('item.link','My link')
+            ->set('item.link','#my-link')
             ->call('save');
 
         $this->assertDatabaseHas('navitems', [
