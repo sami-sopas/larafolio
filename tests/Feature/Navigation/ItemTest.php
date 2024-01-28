@@ -45,4 +45,71 @@ class ItemTest extends TestCase
             'link' => '#my-link'
         ]);
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function label_is_required()
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Item::class)
+            ->set('item.label','') //Se envia un label vacio
+            ->set('item.link','#my-link')
+            ->call('save')
+            ->assertHasErrors(['item.label' => 'required']); //Verificar que se muestra el error del label
+
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function label_must_have_a_maximum_of_twenty_characteres()
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Item::class)
+            ->set('item.label','My label with more than twenty characters') //Se envia un label con mas de 20 caracteres
+            ->set('item.link','#my-link')
+            ->call('save')
+            ->assertHasErrors(['item.label' => 'max']); //Verificar que se muestra el error del label
+    }
+
+        /**
+     * @test
+     * @return void
+     */
+    public function link_is_required()
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Item::class)
+            ->set('item.label','Mi enlace')
+            ->set('item.link','') //Se envia un label vacio
+            ->call('save')
+            ->assertHasErrors(['item.link' => 'required']); //Verificar que se muestra el error del link
+
+    }
+
+        /**
+     * @test
+     * @return void
+     */
+    public function link_must_have_a_maximum_of_forty_characteres()
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Item::class)
+            ->set('item.label','my label')
+            ->set('item.link','#11234567891234567891234567891234567891234567') //link con mas de 40 caracteres
+            ->call('save')
+            ->assertHasErrors(['item.link' => 'max']); //Verificar que se muestra el error del link
+    }
+
 }
