@@ -14,6 +14,9 @@ class Info extends Component
     //Propiedad para gestionar el archivo
     public $cvFile = null;
 
+    //Propiedad para la imagen
+    public $imageFile = null;
+
     public function mount()
     {
         //En caso de no tener un registro, se creara un objeto vacio

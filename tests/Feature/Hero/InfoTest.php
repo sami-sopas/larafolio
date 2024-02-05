@@ -9,6 +9,8 @@ use App\Models\PersonalInformation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class InfoTest extends TestCase
 {
@@ -68,5 +70,51 @@ class InfoTest extends TestCase
         // //Verificar que sea un visitante
         // $this->assertGuest();
 
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function admin_can_edit_hero_info()
+    {
+        $user = User::factory()->create();
+
+        $info = PersonalInformation::factory()->create();
+
+        //Simula que se sube al servidor una imagen
+        $image = UploadedFile::fake()->image('heroimage.jpg');
+
+        //Lo mismo pero con un archivo
+        $cv = UploadedFile::fake()->create('cv.pdf');
+
+        //Guardar los archivos en un disco ficticio
+        Storage::fake('hero');
+        Storage::fake('cv');
+
+        //Editando esa informacion
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title', 'Juanito Animaña')
+            ->set('info.description', 'No chambea')
+            ->set('cvFile', $cv)
+            ->set('imageFile', $image)
+            ->call('edit');
+
+        //Refrescar la info (para que no se quede con la info anterior)
+        $info->refresh();
+
+        //Verificar que se haya guardado la informacion
+        $this->assertDatabaseHas('personal_information',[
+            'id' => $info->id,
+            'title' => 'Juanito Animaña',
+            'description' => 'No chambea',
+            'cv' => $info->cv, //al guardar los archivos, sus nombres cambiaran siempre (se les aplica un hash)
+            'image' => $info->image
+        ]);
+
+        //Verificar que se haya guardado el archivo en base a sus nombres
+        Storage::disk('hero')->assertExists($info->image);
+        Storage::disk('cv')->assertExists($info->cv);
     }
 }
