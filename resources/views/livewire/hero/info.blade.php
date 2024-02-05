@@ -16,6 +16,11 @@
                 </a>
             </div>
             <!-- Boton Edit -->
+            <div class="mt-3 sm:mt-0 sm:ml-3">
+                <x-actions.action wire:click.prevent="openSlide" title="{{ __('Edit') }}" class="flex items-center justify-center px-8 py-3 md:py-4 md:px-10 text-yellow-300 hover:text-blue-300">
+                    <x-icons.edit/>
+                </x-actions.action>
+            </div>
         </div>
     </div>
     <!-- slideover edit hero -->
