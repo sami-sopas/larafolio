@@ -24,4 +24,7 @@
         </div>
     </div>
     <!-- slideover edit hero -->
+    <x-modals.slideover>
+        <x-forms.edit-hero :info="$info" :imageFile="$imageFile" />
+    </x-modals.slideover>
 </main>
