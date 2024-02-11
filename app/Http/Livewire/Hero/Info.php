@@ -4,9 +4,11 @@ namespace App\Http\Livewire\Hero;
 
 use App\Models\PersonalInformation;
 use Livewire\Component;
+use App\Http\Livewire\Traits\Slideover;
 
 class Info extends Component
 {
+    use Slideover;
 
     //Propiedades que se veran en la vista
     public PersonalInformation $info;

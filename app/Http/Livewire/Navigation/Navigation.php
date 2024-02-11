@@ -4,20 +4,15 @@ namespace App\Http\Livewire\Navigation;
 
 use App\Models\Navitem;
 use Livewire\Component;
+use App\Http\Livewire\Traits\Slideover;
 use App\Http\Livewire\Traits\Notification;
 
 class Navigation extends Component
 {
-    use Notification;
+    use Notification, Slideover;
 
     //Links que tendra la navegacion
     public $items;
-
-    //Para controlar el modal de slideOver
-    public $openSlideover = false;
-
-    //Para controlar si se va a editar o agregar un nuevo item
-    public $addNewItem = false;
 
     protected $listeners = [
         //Nombre del evento que se va a escuchar => 'Nombre del metodo que se va a ejecutar'
@@ -34,13 +29,6 @@ class Navigation extends Component
     public function mount()
     {
         $this->items = Navitem::all();
-    }
-
-    //Si se envia algo a addNewItem se da por entendido que sera accion de Add
-    public function openSlide($addNewItem = false)
-    {
-        $this->addNewItem = $addNewItem;
-        $this->openSlideover = true;
     }
 
     public function updateDataAfterAddItem()
