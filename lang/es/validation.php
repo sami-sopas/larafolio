@@ -234,6 +234,8 @@ return [
         'year'                     => 'año',
         'label'                    => 'etiqueta',
         'link'                     => 'enlace',
+        'cvFile'                   => 'archivo CV',
+        'imageFile'                => 'archivo de imagen',
     ],
     'custom' => [
         'items.*.label' => [
