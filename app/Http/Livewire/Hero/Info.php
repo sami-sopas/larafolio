@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Hero;
 
-use App\Models\PersonalInformation;
+use RuntimeException;
 use Livewire\Component;
-use App\Http\Livewire\Traits\Slideover;
 use Livewire\WithFileUploads;
-use App\Http\Livewire\Traits\WithImageFile;
+use App\Models\PersonalInformation;
+use App\Http\Livewire\Traits\Slideover;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Livewire\Traits\Notification;
+use App\Http\Livewire\Traits\WithImageFile;
 
 class Info extends Component
 {
@@ -42,6 +44,8 @@ class Info extends Component
 
     public function updatedImageFile()
     {
+        $this->verifyTemporaryUrl();
+
         $this->validate([
             'imageFile' => 'image|max:1024',
         ]);
@@ -51,6 +55,11 @@ class Info extends Component
     {
         //En caso de no tener un registro, se creara un objeto vacio
         $this->info = PersonalInformation::first() ?? new PersonalInformation();
+    }
+
+    public function download()
+    {
+        return Storage::disk('cv')->download($this->info->cv ?? 'my-cv.pdf');
     }
 
     public function edit()
