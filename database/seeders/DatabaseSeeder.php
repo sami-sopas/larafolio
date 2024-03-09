@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Navitem;
 use App\Models\PersonalInformation;
+use App\Models\Project;
 use Illuminate\Database\Seeder;
 use Database\Factories\NavitemFactory;
 
@@ -37,5 +38,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         PersonalInformation::factory()->create();
+
+        Project::factory(3)->create();
     }
 }
