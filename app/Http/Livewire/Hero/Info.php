@@ -90,6 +90,9 @@ class Info extends Component
             $newName =  $this->imageFile->store('/', 'hero');
 
             $this->info->update(['image' => $newName]);
+
+            //Enviar evento a componente Image, para que se vea la imagen actualizada
+            $this->emitTo('hero.image', 'heroImageUpdated');
         }
 
         //Reiniciar propiedades (ojo tambien reinicia la de los traits)
