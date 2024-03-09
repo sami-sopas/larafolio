@@ -117,4 +117,161 @@ class InfoTest extends TestCase
         Storage::disk('hero')->assertExists($info->image);
         Storage::disk('cv')->assertExists($info->cv);
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function can_download_cv()
+    {
+        Livewire::test(Info::class)
+            ->call('download')
+            ->assertFileDownloaded('my-cv.pdf');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function title_is_required()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title', '')
+            ->set('info.description', 'This is a description')
+            ->call('edit')
+            ->assertHasErrors(['info.title' => 'required'])
+            ->assertHasNoErrors(['info.description']);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function title_must_have_a_maximum_of_twenty_characters()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title', '123456789112345678921')
+            ->set('info.description', 'This is a description')
+            ->call('edit')
+            ->assertHasErrors(['info.title' => 'max'])
+            ->assertHasNoErrors(['info.description' => 'max']);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function description_is_required()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title', 'Titulo')
+            ->set('info.description', '')
+            ->call('edit')
+            ->assertHasErrors(['info.description' => 'required'])
+            ->assertHasNoErrors(['info.title']);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function description_must_have_a_maximum_of_255_characters()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title', 'Title')
+            ->set('info.description', str_repeat('a', 256))
+            ->call('edit')
+            ->assertHasErrors(['info.description' => 'max'])
+            ->assertHasNoErrors(['info.title' => 'max']);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function cv_file_must_be_a_pdf()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title','Titulo')
+            ->set('info.description', 'This is a description')
+            ->set('cvFile', UploadedFile::fake()->image('cv.jpg'))
+            ->call('edit')
+            ->assertHasErrors(['cvFile' => 'mimes']);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function cv_file_must_be_max_one_megabyte()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title','Titulo')
+            ->set('info.description', 'This is a description')
+            ->set('cvFile', UploadedFile::fake()->create('cv.pdf', 1025))
+            ->call('edit')
+            ->assertHasErrors(['cvFile' => 'max']);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function image_file_must_be_a_image()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title','Titulo')
+            ->set('info.description', 'This is a description')
+            ->set('imageFile', UploadedFile::fake()->create('file.pdf'))
+            ->call('edit')
+            ->assertHasErrors(['imageFile' => 'image']);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function image_file_must_be_max_one_megabyte()
+    {
+        //El unico que se puede loggear es el dueño
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Info::class)
+            ->set('info.title','Titulo')
+            ->set('info.description', 'This is a description')
+            ->set('imageFile', UploadedFile::fake()->image('image.jpg')->size(1025))
+            ->call('edit')
+            ->assertHasErrors(['imageFile' => 'max']);
+    }
+
+
 }
