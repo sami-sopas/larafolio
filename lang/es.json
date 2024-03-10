@@ -257,5 +257,6 @@
     "Title":"Título",
     "Open Current File":"Abrir archivo actual",
     "Select File":"Seleccionar archivo",
-    "Information saved successfully!":"¡información guardada con éxito!"
+    "Information saved successfully!":"¡información guardada con éxito!",
+    "New Project":"Nuevo Proyecto"
 }

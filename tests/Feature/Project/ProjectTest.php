@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Project;
 
-use App\Http\Livewire\Project\Project;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Livewire\Livewire;
 use Tests\TestCase;
+use App\Models\User;
+use Livewire\Livewire;
+use App\Http\Livewire\Project\Project;
 use App\Models\Project as ProjectModel;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
 {
@@ -63,4 +64,47 @@ class ProjectTest extends TestCase
             ->assertSee($project->url)
             ->assertSee($project->repo_url);
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function only_admin_can_see_projects_actions(): void
+    {
+        $user = User::factory()->create();
+
+        //Crear proyectos
+        ProjectModel::factory(3)->create();
+
+        Livewire::actingAs($user)
+            ->test(Project::class)
+            ->assertStatus(200)
+            ->assertSee(__('New Project'))
+            ->assertSee(__('Edit'))
+            ->assertSee(__('Delete'));
+
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function guest_can_not_see_projects_actions(): void
+    {
+        $this->markTestSkipped('This test has not been implemented yet.');
+
+        // //Crear proyectos
+        // ProjectModel::factory(3)->create();
+
+        // Livewire::test(Project::class)
+        //     ->assertStatus(200)
+        //     ->assertDontSee(__('New Project'))
+        //     ->assertDontSee(__('Edit'))
+        //     ->assertDontSee(__('Delete'));
+
+        // //Validar que somos guests
+        // $this->assertGuest();
+
+    }
+
 }
