@@ -38,4 +38,29 @@ class ProjectTest extends TestCase
             ->assertSee($projects->last()->name)
             ->assertSee($projects->last()->image);
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function user_can_see_all_project_info(): void
+    {
+        $project = ProjectModel::factory()->create([
+            'name' => 'Project Name',
+            'description' => 'Project Description',
+            'image' => 'project-image.jpg',
+            'video_link' => 'https://www.youtube.com/watch?v=video-link',
+            'url' => 'https://project-url.com',
+            'repo_url' => 'https://project-repo-url.com',
+        ]);
+
+        Livewire::test(Project::class)
+            ->call('loadProject', $project->id)
+            ->assertSee($project->name)
+            ->assertSee($project->description)
+            ->assertSee($project->image)
+            ->assertSee($project->video_code) //En la vista vemos el accesor
+            ->assertSee($project->url)
+            ->assertSee($project->repo_url);
+    }
 }
