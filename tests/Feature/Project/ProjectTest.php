@@ -181,6 +181,34 @@ class ProjectTest extends TestCase
         Storage::disk('projects')->assertExists($project->image);
     }
 
+    /** @test */
+    public function admin_can_delete_a_project()
+    {
+        $user = User::factory()->create();
+        $project = ProjectModel::factory()->create();
+        $img = UploadedFile::fake()->image('mysuperimg.jpg');
+        Storage::fake('projects');
+
+        //actualizar imagen, para quitar la que viene por default con el factory
+        Livewire::actingAs($user)->test(Project::class)
+            ->call('loadProject', $project->id)
+            ->set('imageFile', $img)
+            ->call('save');
+
+        $project->refresh();
+
+        Livewire::actingAs($user)->test(Project::class)
+            ->call('deleteProject', $project->id);
+
+        $this->assertDatabaseMissing('projects', [
+            'id' => $project->id,
+        ]);
+
+        //Verificar que la imagen ya no existe en el disco
+        Storage::disk('projects')->assertMissing($project->image);
+    }
+
+
 
 
 }

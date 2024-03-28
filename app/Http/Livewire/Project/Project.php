@@ -16,6 +16,9 @@ class Project extends Component
     public ProjectModel $currentProject;
     public bool $openModal = false;
 
+    //Al eliminar, sale un mensaje si se da click, se dispara un evento desde el front, y aqui lo escuchamis
+    protected $listeners = ['deleteProject'];
+
     protected $rules = [
         'currentProject.name' => 'required|max:100',
         'currentProject.description' => 'required|max:450',
@@ -79,6 +82,17 @@ class Project extends Component
 
         //Nota: Ya no se necesita obtener de nuevo los projects, porque se ejecutara el metodo render
 
+    }
+
+    public function deleteProject(ProjectModel $project)
+    {
+        //Eliminar imagen de disco
+        $this->deleteFile('projects', $project->image);
+
+        //Eliminar de BD
+        $project->delete();
+
+        $this->notify(__('Project has been deleted'), 'deleteMessage');
     }
 
     public function render()
