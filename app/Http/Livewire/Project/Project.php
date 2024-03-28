@@ -38,7 +38,12 @@ class Project extends Component
             $this->currentProject = $project;
         }
 
-        $this->openModal = true;
+        $this->openModal = $modal;
+
+        //Abrir slide para editar
+        if(!$modal){
+            $this->openSlide();
+        }
     }
 
     public function create()
@@ -67,7 +72,6 @@ class Project extends Component
         }
 
         $this->currentProject->save();
-
 
         $this->reset(['imageFile','openSlideover']);
 

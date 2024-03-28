@@ -1,16 +1,12 @@
 <div class="max-w-2xl mx-auto py-16 sm:py-24 lg:max-w-none">
     <div class="flex items-center">
         <h2 class="text-2xl font-extrabold text-gray-900 mr-5" id="{{ __('proyectos') }}">{{ __('Projects') }}</h2>
-        <!-- Boton add -->
-        <x-actions.action
-            wire:click.prevent="create"
-            title="{{ __('New Project') }}"
-            class="text-gray-800 hover:text-gray-600">
-            <x-icons.add />
+        <x-actions.action wire:click.prevent="create" title="{{ __('New Project') }}" class="text-gray-800 hover:text-gray-600">
+            <x-icons.add/>
         </x-actions.action>
     </div>
-    <div class="lg:space-y-6 lg:grid lg:grid-cols-3 lg:gap-x-6">
-        @forelse ($projects as $project)
+    <div class="space-y-12 lg:space-y-6 lg:grid lg:grid-cols-3 lg:gap-x-6">
+        @forelse($projects as $project)
             <div class="group mt-6" wire:key="{{ $project->id }}">
                 <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                     <a href="#" wire:click.prevent="loadProject({{ $project->id }})">
@@ -20,22 +16,28 @@
                 <h3 class="mt-6 text-base font-semibold text-gray-900">
                     <a href="#" wire:click.prevent="loadProject({{ $project->id }})">{{ $project->name }}</a>
                 </h3>
-                <!-- Boton edit and delete -->
                 <div class="flex items-center" x-data>
-                    <x-actions.action title="{{ __('Edit') }}" class="text-gray-800 hover:text-gray-600">
-                        <x-icons.edit />
+                    <x-actions.action wire:click.prevent="loadProject({{ $project->id }}, false)" title="{{ __('Edit') }}" class="text-gray-800 hover:text-gray-600">
+                        <x-icons.edit/>
                     </x-actions.action>
-                    <x-actions.delete eventName="deleteProject" :object="$project" />
+                    <x-actions.delete eventName="deleteProject" :object="$project"/>
                 </div>
             </div>
         @empty
-            <h3>{{ __('There are no projects to show') }}</h3>
+            <h3>{{ __('There are no projects to show!') }}</h3>
         @endforelse
     </div>
 
-    <!-- Boton Mostrar mas / Mostrar menos -->
+    {{-- <div class="flex justify-center mt-8 items-center space-x-2">
+        @if($counter < $this->total)
+            <button wire:click="showMore" type="button" class="px-3 py-3 border rounded bg-gray-800 text-white hover:border-red-600 hover:bg-red-400">{{ __('Show more') }}</button>
+        @endif
+        @if($counter > 3)
+            <a href="#" wire:click.prevent="showLess" class="text-sm text-gray-800 hover:text-gray-600" target="_blank">{{ __('Show less') }}</a>
+        @endif
+    </div> --}}
 
-    <!-- Info Modal -->
+    <!-- Modal -->
     <div x-data="{ open: @entangle('openModal').defer }" @keydown.window.escape="open = false" x-show="open" class="relative z-10" aria-labelledby="modal-title" x-ref="dialog" aria-modal="true">
         <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-description="Background backdrop, show/hide based on modal state." class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
         <div class="fixed z-10 inset-0 overflow-y-auto">
@@ -68,7 +70,6 @@
                                         </svg>
                                     </a>
                                 @endif
-
                                 @if($currentProject->repo_url)
                                     <a href="{{ $currentProject->repo_url }}" class="text-gray-800 hover:text-gray-600" title="Repositorio" target="_blank">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -89,7 +90,6 @@
         </div>
     </div>
 
-    <!-- SlideOver Formulario -->
     <x-modals.slideover>
         <x-forms.create-project :currentProject="$currentProject" :imageFile="$imageFile"/>
     </x-modals.slideover>
