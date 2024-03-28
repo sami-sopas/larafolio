@@ -7,6 +7,17 @@ use Illuminate\Support\Facades\Storage;
 
 trait WithImageFile
 {
+    public $imageFile = null;
+
+    public function updatedImageFile()
+    {
+        $this->verifyTemporaryUrl();
+
+        $this->validate([
+            'imageFile' => 'image|max:1024',
+        ]);
+    }
+
     private function deleteFile($disk, $filename)
     {
         //Verifica que el archivo exista en el disco dado

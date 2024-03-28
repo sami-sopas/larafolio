@@ -235,7 +235,10 @@ return [
         'label'                    => 'etiqueta',
         'link'                     => 'enlace',
         'cvFile'                   => 'archivo CV',
-        'imageFile'                => 'archivo de imagen',
+        'imageFile'                => 'Archivo de imagen',
+        'video_link'               => 'Enlace de video',
+        'repo_url'                 => 'Enlace de repositorio',
+
     ],
     'custom' => [
         'items.*.label' => [

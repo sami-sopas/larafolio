@@ -2,11 +2,14 @@
     <div class="flex items-center">
         <h2 class="text-2xl font-extrabold text-gray-900 mr-5" id="{{ __('proyectos') }}">{{ __('Projects') }}</h2>
         <!-- Boton add -->
-        <x-actions.action title="{{ __('New Project') }}" class="text-gray-800 hover:text-gray-600">
+        <x-actions.action
+            wire:click.prevent="create"
+            title="{{ __('New Project') }}"
+            class="text-gray-800 hover:text-gray-600">
             <x-icons.add />
         </x-actions.action>
     </div>
-    <div class="space-y-12 lg:space-y-6 lg:grid lg:grid-cols-3 lg:gap-x-6">
+    <div class="lg:space-y-6 lg:grid lg:grid-cols-3 lg:gap-x-6">
         @forelse ($projects as $project)
             <div class="group mt-6" wire:key="{{ $project->id }}">
                 <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
@@ -23,12 +26,11 @@
                         <x-icons.edit />
                     </x-actions.action>
                     <x-actions.delete eventName="deleteProject" :object="$project" />
-
+                </div>
             </div>
         @empty
             <h3>{{ __('There are no projects to show') }}</h3>
         @endforelse
-
     </div>
 
     <!-- Boton Mostrar mas / Mostrar menos -->
@@ -87,5 +89,8 @@
         </div>
     </div>
 
-    <!-- SlideOver -->
+    <!-- SlideOver Formulario -->
+    <x-modals.slideover>
+        <x-forms.create-project :currentProject="$currentProject" :imageFile="$imageFile"/>
+    </x-modals.slideover>
 </div>
