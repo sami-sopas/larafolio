@@ -80,7 +80,7 @@ class Project extends Component
 
         $this->notify(__('Project saved successfully'));
 
-        //Nota: Ya no se necesita obtener de nuevo los projects, porque se ejecutara el metodo render
+        //Nota: Ya no se necesita obtener de nuevo los projects, porque se obtendran en el metodo render
 
     }
 
