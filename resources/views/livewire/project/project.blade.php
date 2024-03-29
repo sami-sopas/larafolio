@@ -28,14 +28,27 @@
         @endforelse
     </div>
 
-    {{-- <div class="flex justify-center mt-8 items-center space-x-2">
+    <!-- Boton mostrar mas / menos -->
+
+    <div class="flex justify-center mt-8 items-center space-x-2">
         @if($counter < $this->total)
-            <button wire:click="showMore" type="button" class="px-3 py-3 border rounded bg-gray-800 text-white hover:border-red-600 hover:bg-red-400">{{ __('Show more') }}</button>
+            <button
+                 wire:click="showMore"
+                 type="button"
+                 class="px-3 py-3 border rounded bg-gray-800 text-white hover:border-red-600 hover:bg-red-400">
+                 {{ __('Show more') }}
+            </button>
         @endif
         @if($counter > 3)
-            <a href="#" wire:click.prevent="showLess" class="text-sm text-gray-800 hover:text-gray-600" target="_blank">{{ __('Show less') }}</a>
+            <a
+                href="#"
+                wire:click.prevent="showLess"
+                class="text-sm text-gray-800 hover:text-gray-600"
+                target="_blank">
+                {{ __('Show less') }}
+            </a>
         @endif
-    </div> --}}
+    </div>
 
     <!-- Modal -->
     <div x-data="{ open: @entangle('openModal').defer }" @keydown.window.escape="open = false" x-show="open" class="relative z-10" aria-labelledby="modal-title" x-ref="dialog" aria-modal="true">

@@ -260,5 +260,7 @@
     "Information saved successfully!":"¡información guardada con éxito!",
     "New Project":"Nuevo Proyecto",
     "Project saved successfully!":"¡Proyecto guardado con éxito!",
-    "Project has been deleted":"El proyecto ha sido eliminado"
+    "Project has been deleted":"El proyecto ha sido eliminado",
+    "Show More":"Mostrar más",
+    "Show Less":"Mostrar menos"
 }
