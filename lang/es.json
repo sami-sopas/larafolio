@@ -262,5 +262,10 @@
     "Project saved successfully!":"¡Proyecto guardado con éxito!",
     "Project has been deleted":"El proyecto ha sido eliminado",
     "Show More":"Mostrar más",
-    "Show Less":"Mostrar menos"
+    "Show Less":"Mostrar menos",
+    "contact me":"Contáctame",
+    "There is no contact email to show!":"¡No existe correo electrónico de contacto para mostrar!",
+    "Email Address":"Dirección de correo electrónico",
+    "Update Email":"Actualizar correo electrónico",
+    "Contact email saved successfully!":"¡Correo electrónico de contacto guardado con éxito!"
 }
