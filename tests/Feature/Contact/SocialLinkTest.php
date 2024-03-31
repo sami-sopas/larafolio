@@ -79,4 +79,29 @@ class SocialLinkTest extends TestCase
             'icon' => 'fa-brands fa-facebook'
         ]);
     }
+
+    /** @test */
+    public function admin_can_add_edit_a_social_link(): void
+    {
+        $user = User::factory()->create();
+
+        $socialLink = SocialLinkModel::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(SocialLink::class)
+            ->set('socialLinkSelected',$socialLink->id)
+            ->set('socialLink.name','Facebook')
+            ->set('socialLink.url','https://facebook.com')
+            ->set('socialLink.icon','fa-brands fa-facebook')
+            ->call('save');
+
+        $socialLink->refresh();
+
+        $this->assertDatabaseHas('social_links', [
+            'id' => $socialLink->id,
+            'name' => 'Facebook',
+            'url' => 'https://facebook.com',
+            'icon' => $socialLink->icon
+        ]);
+    }
 }
