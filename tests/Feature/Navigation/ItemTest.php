@@ -11,6 +11,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ItemTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      * @return void

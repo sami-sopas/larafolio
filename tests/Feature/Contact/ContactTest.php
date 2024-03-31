@@ -45,13 +45,13 @@ class ContactTest extends TestCase
     /** @test */
     public function guest_cannot_see_contact_action(): void
     {
-        $this->markTestSkipped('Uncomment later');
+        //$this->markTestSkipped('Uncomment later');
 
-        // Livewire::test(Contact::class)
-        //     ->assertStatus(200)
-        //     ->assertDontSee(__('Edit'));
+        Livewire::test(Contact::class)
+            ->assertStatus(200)
+            ->assertDontSee(__('Edit'));
 
-        // $this->assertGuest();
+        $this->assertGuest();
     }
 
         /** @test */

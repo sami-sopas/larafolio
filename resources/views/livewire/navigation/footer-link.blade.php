@@ -4,6 +4,7 @@
         class="px-5 py-2 text-gray-200 hover:text-red-300"
         :items="$items"/>
 
+    @auth
     <!-- Boton Logout -->
     <form method="POST" action="{{ route('logout') }}" class="py-2">
         @csrf
@@ -11,4 +12,5 @@
             {{ __('Log Out') }}
         </a>
     </form>
+    @endauth
 </nav>

@@ -93,19 +93,19 @@ class ProjectTest extends TestCase
      */
     public function guest_can_not_see_projects_actions(): void
     {
-        $this->markTestSkipped('This test has not been implemented yet.');
+        //$this->markTestSkipped('This test has not been implemented yet.');
 
-        // //Crear proyectos
-        // ProjectModel::factory(3)->create();
+        //Crear proyectos
+        ProjectModel::factory(3)->create();
 
-        // Livewire::test(Project::class)
-        //     ->assertStatus(200)
-        //     ->assertDontSee(__('New Project'))
-        //     ->assertDontSee(__('Edit'))
-        //     ->assertDontSee(__('Delete'));
+        Livewire::test(Project::class)
+            ->assertStatus(200)
+            ->assertDontSee(__('New Project'))
+            ->assertDontSee(__('Edit'))
+            ->assertDontSee(__('Delete'));
 
-        // //Validar que somos guests
-        // $this->assertGuest();
+        //Validar que somos guests
+        $this->assertGuest();
 
     }
 
