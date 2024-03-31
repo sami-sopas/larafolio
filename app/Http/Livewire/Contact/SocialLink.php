@@ -22,6 +22,8 @@ class SocialLink extends Component
         'socialLink.icon' => ['nullable', 'regex:/^(fa-brands|fa-solid)\sfa-[a-z-]+/i'],
     ];
 
+    protected $listeners = ['deleteSocialLink'];
+
     //Hook updated
     public function updatedSocialLinkSelected()
     {
@@ -61,6 +63,13 @@ class SocialLink extends Component
 
         $this->openSlide(true);
 
+    }
+
+    public function deleteSocialLink()
+    {
+        $this->socialLink->delete();
+        $this->reset('socialLinkSelected');
+        $this->notify(__('Social link has been deleted successfully!'),'deleteMessage');
     }
 
     public function render()

@@ -8,6 +8,9 @@
     </x-inputs.select>
 
     @if($socialLinkSelected)
-        <x-forms.create-or-edit-social-link-form/>
+        <x-forms.create-or-edit-social-link-form>
+            <x-actions.delete eventName="deleteSocialLink">
+            </x-actions.delete>
+        </x-forms.create-or-edit-social-link-form>
     @endif
 </div>
