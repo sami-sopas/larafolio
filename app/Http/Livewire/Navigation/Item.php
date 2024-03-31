@@ -36,6 +36,8 @@ class Item extends Component
         $this->mount();
 
         $this->notify(__('Item created successfully!'));
+
+        $this->emitTo('navigation.footer-link','itemsHaveBeenUpdated');
     }
 
     public function render()

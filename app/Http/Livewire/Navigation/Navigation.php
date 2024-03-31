@@ -55,7 +55,8 @@ class Navigation extends Component
         $this->notify(__('Menu item updated successfully!'));
         //$this->dispatchBrowserEvent('notify',['message' => __('Menu item updated successfully!')]);
 
-
+        //Disparar evento a footerLink para que renderice de nuevo
+        $this->emitTo('navigation.footer-link','itemsHaveBeenUpdated');
     }
 
     public function deleteItem(Navitem $item)
@@ -69,7 +70,10 @@ class Navigation extends Component
         //Enviar notificacion (disparar evento al navegador)
         //$this->dispatchBrowserEvent('deleteMessage',['message' => __('Menu item has been deleted')]);
         $this->notify(__('Menu item has been deleted'),'deleteMessage');
+
+        $this->emitTo('navigation.footer-link','itemsHaveBeenUpdated');
     }
+
 
     public function render()
     {
