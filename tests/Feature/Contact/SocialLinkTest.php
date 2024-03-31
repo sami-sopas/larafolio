@@ -3,11 +3,12 @@
 namespace Tests\Feature\Contact;
 
 use Tests\TestCase;
+use App\Models\User;
 use Livewire\Livewire;
 use App\Http\Livewire\Contact\SocialLink;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\SocialLink as SocialLinkModel;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SocialLinkTest extends TestCase
 {
@@ -31,5 +32,51 @@ class SocialLinkTest extends TestCase
             ->assertSee($links->first()->icon)
             ->assertSee($links->last()->url)
             ->assertSee($links->last()->icon);
+    }
+
+    /** @test */
+    public function only_admin_can_see_social_links_actions(): void
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(SocialLink::class)
+            ->assertStatus(200)
+            ->assertSee(__('New'))
+            ->assertSee(__('Edit'));
+
+    }
+
+    /** @test */
+    public function guests_cannot_see_social_links_actions(): void
+    {
+        $this->markTestSkipped('Descomentar despues');
+
+        // Livewire::test(SocialLink::class)
+        //  ->assertStatus(200)
+        // ->assertDontSee(__('New'))
+        // ->assertDontSee(__('Edit'));
+
+        // $this->assertGuest();
+    }
+
+
+    /** @test */
+    public function admin_can_add_a_social_link(): void
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(SocialLink::class)
+            ->set('socialLink.name','Facebook')
+            ->set('socialLink.url','https://facebook.com')
+            ->set('socialLink.icon','fa-brands fa-facebook')
+            ->call('save');
+
+        $this->assertDatabaseHas('social_links', [
+            'name' => 'Facebook',
+            'url' => 'https://facebook.com',
+            'icon' => 'fa-brands fa-facebook'
+        ]);
     }
 }

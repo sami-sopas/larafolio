@@ -238,6 +238,7 @@ return [
         'imageFile'                => 'Archivo de imagen',
         'video_link'               => 'Enlace de video',
         'repo_url'                 => 'Enlace de repositorio',
+        'icon'                     => 'icono',
 
     ],
     'custom' => [
